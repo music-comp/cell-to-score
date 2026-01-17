@@ -1,0 +1,1738 @@
+<!DOCTYPE HTML>
+<html lang="en" class="rust sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>From Cell to Score</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A comprehensive self-study curriculum in cell-based composition techniques, designed to accompany nine semesters of private composition instruction.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "rust";
+            const default_dark_theme = "coal";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">From Cell to Score</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/forgotten-tones/cell-to-score" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p><em>From Cell to Score</em> is a living curriculum designed to accompany nine semesters of private composition instruction at Berklee Online. It provides a parallel track of self-study focused on <strong>cell-based compositional techniques</strong>—the art of building compelling motives, assembling them into phrases, and transforming them across movements and forms.</p>
+<h2 id="who-this-book-is-for"><a class="header" href="#who-this-book-is-for">Who This Book Is For</a></h2>
+<p>This curriculum is designed for:</p>
+<ul>
+<li><strong>Advanced adult learners</strong> with existing theoretical knowledge seeking to deepen their compositional craft</li>
+<li><strong>Harmony-first composers</strong> who want to develop stronger melodic and motivic thinking</li>
+<li><strong>Students of contemporary composition</strong> interested in 20th/21st-century approaches to cell-based writing</li>
+<li><strong>Anyone following a private instruction sequence</strong> who wants structured self-study material</li>
+</ul>
+<h2 id="how-to-use-this-book"><a class="header" href="#how-to-use-this-book">How to Use This Book</a></h2>
+<p>The book is organized in three parts:</p>
+<ol>
+<li><strong>Foundations</strong> — Core concepts, resources, and techniques that underpin the entire curriculum</li>
+<li><strong>The Nine Semesters</strong> — Detailed guides for each semester, mapping Berklee requirements to cell-based learning objectives</li>
+<li><strong>Daily Practices</strong> — Exercises and étude progressions to build compositional habits</li>
+</ol>
+<p>Each semester chapter follows a consistent structure:</p>
+<ul>
+<li><strong>Berklee Requirements</strong> — What the official syllabus expects</li>
+<li><strong>Cell-to-Score Focus</strong> — Our parallel learning objectives</li>
+<li><strong>Repertoire to Study</strong> — Scores and recordings to analyze</li>
+<li><strong>Compositional Projects</strong> — Pieces to compose</li>
+<li><strong>Reflection &amp; Notes</strong> — Space for your observations and discoveries</li>
+</ul>
+<h2 id="the-spiral-structure"><a class="header" href="#the-spiral-structure">The Spiral Structure</a></h2>
+<p>This curriculum follows Jerome Bruner's <strong>spiral curriculum</strong> principle: techniques are introduced, then revisited at increasing levels of complexity. A transformation technique learned in Semester 1 for solo recorder will return in Semester 4 in a chamber context, and again in Semester 7 at orchestral scale.</p>
+<h2 id="a-living-document"><a class="header" href="#a-living-document">A Living Document</a></h2>
+<p>This book is designed to grow. As you progress through your studies, add your reflections, discoveries, and compositions. The Reflection sections are there for you to document what works, what challenges you, and how your compositional voice develops.</p>
+<hr />
+<p><em>Let's begin.</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="philosophy--approach"><a class="header" href="#philosophy--approach">Philosophy &amp; Approach</a></h1>
+<h2 id="the-core-challenge-harmony-first-composers-and-melodic-thinking"><a class="header" href="#the-core-challenge-harmony-first-composers-and-melodic-thinking">The Core Challenge: Harmony-First Composers and Melodic Thinking</a></h2>
+<p>For composers whose natural orientation is vertical (harmonic) rather than horizontal (melodic), developing strong motivic thinking requires deliberate practice. This curriculum systematically builds linear thinking through what Schoenberg called <strong>"developing variation"</strong>—the technique of generating extended musical structures from minimal motivic material.</p>
+<h2 id="timbre-first-then-structure"><a class="header" href="#timbre-first-then-structure">Timbre First, Then Structure</a></h2>
+<p>Following the wisdom of contemporary composition pedagogy: <strong>timbre first</strong>. Before worrying about formal architecture, we explore the inner beauty of sound—its color, its breath, its life-power. This is especially true in solo wind writing, where the instrument's voice <em>is</em> the composition.</p>
+<h2 id="the-cell-as-generative-seed"><a class="header" href="#the-cell-as-generative-seed">The Cell as Generative Seed</a></h2>
+<p>A <strong>cell</strong> is the smallest unit of musical material that contains recognizable character. It might be:</p>
+<ul>
+<li>A rhythmic figure</li>
+<li>An intervallic pattern</li>
+<li>A gestural shape</li>
+<li>A timbral event</li>
+</ul>
+<p>From this seed, entire pieces grow through transformation, development, and recombination.</p>
+<h2 id="historical-forms-as-scaffolding"><a class="header" href="#historical-forms-as-scaffolding">Historical Forms as Scaffolding</a></h2>
+<p>We don't reinvent the wheel. Baroque forms—the fantasia, the dance suite, the division—provide time-tested structures that can support contemporary harmonic language. The container is old; the contents are new.</p>
+<h2 id="constrained-creativity"><a class="header" href="#constrained-creativity">Constrained Creativity</a></h2>
+<p>Paradoxically, <strong>constraints liberate</strong>. By limiting pitch collections, rhythmic values, or registral range, we force creative solutions that wouldn't emerge in unlimited freedom. This curriculum uses constrained exercises extensively.</p>
+<h2 id="practice-over-analysis"><a class="header" href="#practice-over-analysis">Practice Over Analysis</a></h2>
+<p>While analysis informs composition, this curriculum emphasizes <strong>doing</strong>. Every technique is immediately applied in compositional exercises. Understanding comes through making.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="core-resources--reading-list"><a class="header" href="#core-resources--reading-list">Core Resources &amp; Reading List</a></h1>
+<h2 id="primary-texts"><a class="header" href="#primary-texts">Primary Texts</a></h2>
+<h3 id="for-building-motives-and-phrases"><a class="header" href="#for-building-motives-and-phrases">For Building Motives and Phrases</a></h3>
+<ul>
+<li><strong>Jorge Variego</strong>, <em>Composing with Constraints: 100 Practical Exercises in Music Composition</em> (Oxford, 2021) — The primary workbook for this curriculum</li>
+<li><strong>Arnold Schoenberg</strong>, <em>Fundamentals of Musical Composition</em> (Faber, 1967) — Motive and phrase theory</li>
+<li><strong>Alan Belkin</strong>, <em>A Practical Guide to Musical Composition</em> (free online)</li>
+</ul>
+<h3 id="for-post-tonal-cell-based-composition"><a class="header" href="#for-post-tonal-cell-based-composition">For Post-Tonal Cell-Based Composition</a></h3>
+<ul>
+<li><strong>Miguel Roig-Francolí</strong>, <em>Understanding Post-Tonal Music</em> 2nd ed. (Routledge, 2021) — Chapter 1 on cells</li>
+<li><strong>Joseph Straus</strong>, <em>Introduction to Post-Tonal Theory</em> 4th ed. (Norton, 2016)</li>
+<li><strong>Vincent Persichetti</strong>, <em>Twentieth Century Harmony</em> (Norton, 1961)</li>
+</ul>
+<h3 id="for-contemporary-approaches"><a class="header" href="#for-contemporary-approaches">For Contemporary Approaches</a></h3>
+<ul>
+<li><strong>Olivier Messiaen</strong>, <em>The Technique of My Musical Language</em> (Leduc, 1944)</li>
+<li><strong>Steve Reich</strong>, <em>Writings on Music, 1965-2000</em> (OUP, 2002)</li>
+<li><strong>Béla Bartók</strong>, <em>Mikrokosmos</em> (6 volumes) — Progressive cell-based études</li>
+</ul>
+<h3 id="for-solo-wind-composition"><a class="header" href="#for-solo-wind-composition">For Solo Wind Composition</a></h3>
+<ul>
+<li><strong>Janet Halfyard</strong>, ed., <em>Berio's Sequenzas: Essays on Performance, Composition, and Analysis</em> (Routledge)</li>
+<li>Analysis materials for Debussy's <em>Syrinx</em>, Varèse's <em>Density 21.5</em>, Hosokawa's <em>Vertical Song I</em></li>
+</ul>
+<h3 id="for-recorder-technique-and-repertoire"><a class="header" href="#for-recorder-technique-and-repertoire">For Recorder Technique and Repertoire</a></h3>
+<ul>
+<li><strong>Michael Vetter</strong>, <em>Il flauto dolce ed acerbo</em> (Moeck, 1969) — Foundational avant-garde treatise</li>
+<li><strong>Walter van Hauwe</strong>, <em>The Modern Recorder Player</em> 3 vols. (Schott, 1984-92)</li>
+<li><strong>Bennetts, Bousted &amp; Bowman</strong>, <em>The Quarter-Tone Recorder Manual</em> (1988)</li>
+</ul>
+<h2 id="online-resources"><a class="header" href="#online-resources">Online Resources</a></h2>
+<ul>
+<li><strong>Recorder Map</strong> (recordermap.com) — Basel Hochschule research project cataloguing techniques</li>
+<li><strong>CCBM</strong> (Catalogue of Contemporary Blockflute Music) — 6,000+ contemporary works searchable by technique</li>
+</ul>
+<h2 id="reference-books-already-owned"><a class="header" href="#reference-books-already-owned">Reference Books (Already Owned)</a></h2>
+<ul>
+<li><strong>Kostka, Payne, Almén</strong>, <em>Tonal Harmony with an Introduction to Post-Tonal Music</em> (8th ed.)</li>
+<li><strong>Brent Auerbach</strong>, <em>Musical Motives</em> — For analytical reference</li>
+<li><strong>Richard Cohn</strong>, <em>Audacious Euphony</em> — Neo-Riemannian theory</li>
+<li><strong>Dmitri Tymoczko</strong>, <em>A Geometry of Music</em></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-cellular-approach"><a class="header" href="#the-cellular-approach">The Cellular Approach</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>This section introduces the theoretical and practical framework for cell-based composition—building entire works from the smallest units of musical material.</p>
+<h2 id="key-topics"><a class="header" href="#key-topics">Key Topics</a></h2>
+<ul>
+<li>Definition and identification of musical cells</li>
+<li>The relationship between cells, motives, gestures, and phrases</li>
+<li>How cells generate larger structures</li>
+<li>Historical precedents (Beethoven, Bartók, Webern)</li>
+</ul>
+<h2 id="notes"><a class="header" href="#notes">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-a-cell"><a class="header" href="#what-is-a-cell">What Is a Cell?</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-1"><a class="header" href="#overview-1">Overview</a></h2>
+<p>This section provides a precise definition of musical cells and distinguishes them from related concepts like motives and themes.</p>
+<h2 id="key-topics-1"><a class="header" href="#key-topics-1">Key Topics</a></h2>
+<ul>
+<li>Defining characteristics of a cell</li>
+<li>Cell vs. motive vs. theme</li>
+<li>Examples from the repertoire</li>
+<li>Identifying cells in analysis</li>
+</ul>
+<h2 id="notes-1"><a class="header" href="#notes-1">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="motives-gestures-phrases"><a class="header" href="#motives-gestures-phrases">Motives, Gestures, Phrases</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-2"><a class="header" href="#overview-2">Overview</a></h2>
+<p>This section explores the hierarchy of musical units from the smallest (cells) to larger structural building blocks (phrases), with special attention to gesture as an organizing principle in contemporary music.</p>
+<h2 id="key-topics-2"><a class="header" href="#key-topics-2">Key Topics</a></h2>
+<ul>
+<li>The motive: definition and characteristics</li>
+<li>Gesture as a contemporary organizing principle</li>
+<li>Phrase structure and breath</li>
+<li>How units combine and nest</li>
+</ul>
+<h2 id="notes-2"><a class="header" href="#notes-2">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="transformation-techniques"><a class="header" href="#transformation-techniques">Transformation Techniques</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-3"><a class="header" href="#overview-3">Overview</a></h2>
+<p>This section catalogues the techniques for transforming musical cells while maintaining their identity—the core skill of cell-based composition.</p>
+<h2 id="key-topics-3"><a class="header" href="#key-topics-3">Key Topics</a></h2>
+<ul>
+<li>Augmentation and diminution</li>
+<li>Inversion and retrograde</li>
+<li>Fragmentation and extension</li>
+<li>Sequence and transposition</li>
+<li>Intervallic expansion and contraction</li>
+<li>Rhythmic transformation</li>
+<li>Timbral transformation</li>
+</ul>
+<h2 id="notes-3"><a class="header" href="#notes-3">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="solo-wind-writing--the-recorder"><a class="header" href="#solo-wind-writing--the-recorder">Solo Wind Writing &amp; The Recorder</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-4"><a class="header" href="#overview-4">Overview</a></h2>
+<p>This section addresses the unique challenges and opportunities of writing for unaccompanied wind instrument, with specific focus on the recorder as a serious contemporary instrument.</p>
+<h2 id="key-topics-4"><a class="header" href="#key-topics-4">Key Topics</a></h2>
+<ul>
+<li>The solo wind tradition from Telemann to today</li>
+<li>Breath as compositional element</li>
+<li>Creating coherence without accompaniment</li>
+<li>The recorder's contemporary repertoire</li>
+</ul>
+<h2 id="notes-4"><a class="header" href="#notes-4">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="coherence-in-unaccompanied-music"><a class="header" href="#coherence-in-unaccompanied-music">Coherence in Unaccompanied Music</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-5"><a class="header" href="#overview-5">Overview</a></h2>
+<p>How does a solo melodic line hold together without harmonic support? This section explores techniques for creating unity and direction in monophonic music.</p>
+<h2 id="key-topics-5"><a class="header" href="#key-topics-5">Key Topics</a></h2>
+<ul>
+<li>Registral stratification and implied polyphony</li>
+<li>Motivic consistency</li>
+<li>Formal articulation through breath and silence</li>
+<li>Pitch organization as structural support</li>
+</ul>
+<h2 id="notes-5"><a class="header" href="#notes-5">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-tenor-recorder"><a class="header" href="#the-tenor-recorder">The Tenor Recorder</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-6"><a class="header" href="#overview-6">Overview</a></h2>
+<p>This section provides practical information about the tenor recorder as a compositional medium: its range, capabilities, idiomatic writing, and contemporary repertoire.</p>
+<h2 id="key-topics-6"><a class="header" href="#key-topics-6">Key Topics</a></h2>
+<ul>
+<li>Range and registers</li>
+<li>Articulation possibilities</li>
+<li>Dynamic range and limitations</li>
+<li>Idiomatic writing patterns</li>
+<li>Key contemporary works</li>
+</ul>
+<h2 id="notes-6"><a class="header" href="#notes-6">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="extended-techniques"><a class="header" href="#extended-techniques">Extended Techniques</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-7"><a class="header" href="#overview-7">Overview</a></h2>
+<p>This section catalogues extended techniques available on the recorder and their compositional applications.</p>
+<h2 id="key-topics-7"><a class="header" href="#key-topics-7">Key Topics</a></h2>
+<ul>
+<li>Multiphonics</li>
+<li>Microtones and quarter-tones</li>
+<li>Breath sounds and air effects</li>
+<li>Key clicks and percussive sounds</li>
+<li>Overblowing and harmonics</li>
+<li>Notation standards</li>
+</ul>
+<h2 id="notes-7"><a class="header" href="#notes-7">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="historical-forms-as-contemporary-scaffolding"><a class="header" href="#historical-forms-as-contemporary-scaffolding">Historical Forms as Contemporary Scaffolding</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-8"><a class="header" href="#overview-8">Overview</a></h2>
+<p>This section explores how historical forms—particularly from the Baroque era—can provide structural scaffolding for contemporary compositional language.</p>
+<h2 id="key-topics-8"><a class="header" href="#key-topics-8">Key Topics</a></h2>
+<ul>
+<li>The container vs. the contents</li>
+<li>Adapting historical forms</li>
+<li>Form as enabling constraint</li>
+<li>Case studies in contemporary use of historical forms</li>
+</ul>
+<h2 id="notes-8"><a class="header" href="#notes-8">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="baroque-dance-forms"><a class="header" href="#baroque-dance-forms">Baroque Dance Forms</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-9"><a class="header" href="#overview-9">Overview</a></h2>
+<p>This section examines the formal structures of Baroque dances and their potential as compositional scaffolding.</p>
+<h2 id="key-topics-9"><a class="header" href="#key-topics-9">Key Topics</a></h2>
+<ul>
+<li>Allemande, courante, sarabande, gigue</li>
+<li>Binary and rounded binary forms</li>
+<li>Character and tempo associations</li>
+<li>Contemporary adaptations</li>
+</ul>
+<h2 id="notes-9"><a class="header" href="#notes-9">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-fantasia-tradition"><a class="header" href="#the-fantasia-tradition">The Fantasia Tradition</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-10"><a class="header" href="#overview-10">Overview</a></h2>
+<p>This section explores the fantasia as a flexible formal vehicle for contemporary composition.</p>
+<h2 id="key-topics-10"><a class="header" href="#key-topics-10">Key Topics</a></h2>
+<ul>
+<li>Historical development of the fantasia</li>
+<li>Sectional vs. continuous structure</li>
+<li>Improvisatory character</li>
+<li>Telemann's Fantasias as models</li>
+<li>Contemporary fantasias</li>
+</ul>
+<h2 id="notes-10"><a class="header" href="#notes-10">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="division--variation"><a class="header" href="#division--variation">Division &amp; Variation</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-11"><a class="header" href="#overview-11">Overview</a></h2>
+<p>This section covers the division and variation as compositional techniques, from Renaissance practice to contemporary approaches.</p>
+<h2 id="key-topics-11"><a class="header" href="#key-topics-11">Key Topics</a></h2>
+<ul>
+<li>The division tradition</li>
+<li>Ground bass and passacaglia</li>
+<li>Theme and variations</li>
+<li>Contemporary variation technique</li>
+<li>Cell-based variation</li>
+</ul>
+<h2 id="notes-11"><a class="header" href="#notes-11">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overview-the-spiral-structure"><a class="header" href="#overview-the-spiral-structure">Overview: The Spiral Structure</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-12"><a class="header" href="#overview-12">Overview</a></h2>
+<p>This section explains the nine-semester structure and how techniques spiral through increasing complexity.</p>
+<h2 id="key-topics-12"><a class="header" href="#key-topics-12">Key Topics</a></h2>
+<ul>
+<li>The three phases: Solo, Chamber, Orchestral</li>
+<li>The spiral curriculum principle</li>
+<li>How techniques return at increasing complexity</li>
+<li>Integration across semesters</li>
+</ul>
+<h2 id="notes-12"><a class="header" href="#notes-12">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-1-solo-instrument--gestural-vocabulary"><a class="header" href="#semester-1-solo-instrument--gestural-vocabulary">Semester 1: Solo Instrument — Gestural Vocabulary</a></h1>
+<blockquote>
+<p><em>"Timbre first! The inner beauty of the colour of sound."</em></p>
+</blockquote>
+<h2 id="overview-13"><a class="header" href="#overview-13">Overview</a></h2>
+<p>Semester 1 focuses on building a <strong>gestural vocabulary</strong> for solo instrument. While Berklee's syllabus addresses "solo instrument excluding piano," we are taking the unusual and rewarding path of exploring the <strong>tenor recorder</strong>—an instrument with deep Renaissance and Baroque roots but significant contemporary repertoire.</p>
+<p>The core question: <strong>How does a solo piece hold together without accompaniment?</strong></p>
+<h2 id="dual-track"><a class="header" href="#dual-track">Dual Track</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Berklee Focus</th><th>Cell-to-Score Focus</th></tr></thead><tbody>
+<tr><td>Solo piece for instrument</td><td>Building motives, defining gestures</td></tr>
+<tr><td>Contemporary styles</td><td>20th/21st-century cell techniques</td></tr>
+<tr><td>Form and coherence</td><td>Gestural vocabulary as structural glue</td></tr>
+<tr><td>Professional notation</td><td>Score as compositional document</td></tr>
+</tbody></table>
+</div>
+<h2 id="key-concepts-this-semester"><a class="header" href="#key-concepts-this-semester">Key Concepts This Semester</a></h2>
+<ul>
+<li><strong>Gesture</strong> as the organizing principle of solo wind writing</li>
+<li><strong>Breath</strong> as structural punctuation</li>
+<li><strong>Registral stratification</strong> creating implied polyphony</li>
+<li><strong>Motivic economy</strong> — maximum expression from minimal material</li>
+<li><strong>Timbre-first</strong> approach to sound and technique</li>
+</ul>
+<h2 id="timeline"><a class="header" href="#timeline">Timeline</a></h2>
+<p>Given advanced preparation, the standard syllabus requirements may be satisfied in <strong>weeks 1-4</strong>, with remaining weeks devoted to extended exploration (extended techniques, additional forms, or early chamber preparation).</p>
+<h2 id="sections"><a class="header" href="#sections">Sections</a></h2>
+<ul>
+<li><a href="part2-semesters/phase1-solo/./s1-berklee.html">Berklee Requirements</a> — Official course objectives</li>
+<li><a href="part2-semesters/phase1-solo/./s1-cells.html">Cell-to-Score Focus</a> — Our parallel learning track</li>
+<li><a href="part2-semesters/phase1-solo/./s1-repertoire.html">Repertoire to Study</a> — Scores and recordings</li>
+<li><a href="part2-semesters/phase1-solo/./s1-projects.html">Compositional Projects</a> — Pieces to compose</li>
+<li><a href="part2-semesters/phase1-solo/./s1-weekly.html">Weekly Breakdown</a> — Detailed week-by-week plan</li>
+<li><a href="part2-semesters/phase1-solo/./s1-reflection.html">Reflection &amp; Notes</a> — Your observations</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-1-berklee-requirements"><a class="header" href="#semester-1-berklee-requirements">Semester 1: Berklee Requirements</a></h1>
+<h2 id="official-course-private-composition-lesson-level-1"><a class="header" href="#official-course-private-composition-lesson-level-1">Official Course: Private Composition Lesson Level 1</a></h2>
+<p><em>Private Composition Lesson Level 1</em> is an introduction to formal composition studies. The instructor will assess your skill level and evaluate your history of composition training and skills to plan a course of study that supports your learning trajectory and goals. Level 1 focuses on composing for a <strong>solo instrument (excluding piano)</strong>. Emphasis is on developing individual creativity in contemporary musical styles.</p>
+<h2 id="learning-outcomes"><a class="header" href="#learning-outcomes">Learning Outcomes</a></h2>
+<p>By the end of this semester, you will be able to:</p>
+<ul>
+<li>Analyze contemporary composition styles and techniques through the study of representative scores</li>
+<li>Develop your compositional techniques and apply them toward writing a piece for a solo instrument</li>
+<li>Consider musical form and musical coherence in your compositions</li>
+<li>Apply contemporary techniques, skills, and strategies to the craft of composition for a solo instrument</li>
+<li>Notate the score according to professional notation standards</li>
+<li>Reflect on your compositional process and articulate artistic choices and intentions</li>
+<li><strong>Compose a piece for a solo instrument (excluding piano)</strong></li>
+</ul>
+<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<ul>
+<li>Notation software (Sibelius, Dorico, MuseScore, etc.) or handwritten notation</li>
+<li>Weekly submission of work-in-progress</li>
+<li>Final polished score in PDF format</li>
+</ul>
+<h2 id="source"><a class="header" href="#source">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-1">Berklee Online: Private Composition Lesson Level 1</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-1-cell-to-score-focus"><a class="header" href="#semester-1-cell-to-score-focus">Semester 1: Cell-to-Score Focus</a></h1>
+<h2 id="learning-objectives"><a class="header" href="#learning-objectives">Learning Objectives</a></h2>
+<p>While Berklee focuses on producing a complete solo work, our parallel track develops the <strong>foundational skills of cell-based composition</strong>:</p>
+<h3 id="1-building-compelling-motives"><a class="header" href="#1-building-compelling-motives">1. Building Compelling Motives</a></h3>
+<ul>
+<li>Generate motives (3-5 notes) with distinct rhythmic and intervallic character</li>
+<li>Understand what makes a motive <em>memorable</em> and <em>generative</em></li>
+<li>Practice daily motive journaling</li>
+</ul>
+<h3 id="2-defining-a-gestural-vocabulary"><a class="header" href="#2-defining-a-gestural-vocabulary">2. Defining a Gestural Vocabulary</a></h3>
+<ul>
+<li>Identify <strong>3-5 characteristic gestures</strong> for your piece:
+<ul>
+<li>Attack profiles (sudden vs. gradual)</li>
+<li>Contour patterns (ascending, falling, arch, wave)</li>
+<li>Rhythmic figures (long-short, repeated, accelerating)</li>
+<li>Dynamic shapes (swell, decay, sforzando)</li>
+</ul>
+</li>
+<li>Each gesture should be recognizable and transformable</li>
+</ul>
+<h3 id="3-basic-transformation-techniques"><a class="header" href="#3-basic-transformation-techniques">3. Basic Transformation Techniques</a></h3>
+<ul>
+<li><strong>Augmentation</strong> — stretching durations</li>
+<li><strong>Diminution</strong> — compressing durations</li>
+<li><strong>Inversion</strong> — flipping intervals</li>
+<li><strong>Retrograde</strong> — reversing order</li>
+<li><strong>Fragmentation</strong> — using part of the motive</li>
+<li><strong>Sequence</strong> — transposing repetition</li>
+</ul>
+<h3 id="4-pitch-organization"><a class="header" href="#4-pitch-organization">4. Pitch Organization</a></h3>
+<ul>
+<li>Work within a <strong>limited pitch collection</strong> (mode, scale, or pitch-class set)</li>
+<li>Explore Messiaen's modes of limited transposition as harmonic/melodic generators</li>
+<li>Understand how pitch constraints force creative solutions</li>
+</ul>
+<h3 id="5-breath-centered-phrase-structure"><a class="header" href="#5-breath-centered-phrase-structure">5. Breath-Centered Phrase Structure</a></h3>
+<ul>
+<li>Use breath as compositional element, not just technical necessity</li>
+<li>Explore Hosokawa's concept of breath as "life-power"</li>
+<li>Plan phrase lengths around natural breathing</li>
+</ul>
+<h2 id="connection-to-variego-workbook"><a class="header" href="#connection-to-variego-workbook">Connection to Variego Workbook</a></h2>
+<p>Complete these exercises from <em>Composing with Constraints</em>:</p>
+<ul>
+<li><strong>Chapter 1</strong>: Melody exercises #1-10 (custom scales, interval cycles)</li>
+<li><strong>Chapter 2</strong>: Rhythm exercises #1-5 (rhythmic motives)</li>
+</ul>
+<h2 id="technique-thread"><a class="header" href="#technique-thread">Technique Thread</a></h2>
+<p>This semester <strong>introduces</strong>:</p>
+<ul>
+<li>Gestural vocabulary</li>
+<li>Basic motivic transformation</li>
+<li>Pitch organization through constraint</li>
+</ul>
+<p>These will be <strong>expanded</strong> in Semester 3 (chamber dialogue) and <strong>mastered</strong> in Semesters 7-8 (orchestral scale).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-1-repertoire-to-study"><a class="header" href="#semester-1-repertoire-to-study">Semester 1: Repertoire to Study</a></h1>
+<h2 id="primary-works"><a class="header" href="#primary-works">Primary Works</a></h2>
+<h3 id="debussy-syrinx-1913"><a class="header" href="#debussy-syrinx-1913">Debussy: <em>Syrinx</em> (1913)</a></h3>
+<ul>
+<li><strong>Why</strong>: The template for modern solo wind writing</li>
+<li><strong>Study focus</strong>: Chromatic/pentatonic cell unification, tripartite form, breath as punctuation</li>
+<li><strong>Duration</strong>: ~3 minutes</li>
+<li><strong>Score</strong>: IMSLP</li>
+</ul>
+<h3 id="hosokawa-vertical-song-i-1995"><a class="header" href="#hosokawa-vertical-song-i-1995">Hosokawa: <em>Vertical Song I</em> (1995)</a></h3>
+<ul>
+<li><strong>Why</strong>: Eastern approach to breath-centered composition</li>
+<li><strong>Study focus</strong>: Single-tone shaping, microtonal inflection, "calligraphy of sound"</li>
+<li><strong>Duration</strong>: ~8 minutes</li>
+<li><strong>Score</strong>: Schott</li>
+</ul>
+<h3 id="berio-gesti-1966"><a class="header" href="#berio-gesti-1966">Berio: <em>Gesti</em> (1966)</a></h3>
+<ul>
+<li><strong>Why</strong>: The landmark contemporary recorder work</li>
+<li><strong>Study focus</strong>: Gesture as organizing principle, theatrical elements, extended techniques</li>
+<li><strong>Duration</strong>: ~6 minutes</li>
+<li><strong>Score</strong>: Universal Edition</li>
+</ul>
+<h2 id="secondary-works"><a class="header" href="#secondary-works">Secondary Works</a></h2>
+<h3 id="varèse-density-215-193646"><a class="header" href="#varèse-density-215-193646">Varèse: <em>Density 21.5</em> (1936/46)</a></h3>
+<ul>
+<li>Registral extremism, interval cycles, key clicks</li>
+</ul>
+<h3 id="telemann-12-fantasias-for-flute-twv-402-13"><a class="header" href="#telemann-12-fantasias-for-flute-twv-402-13">Telemann: <em>12 Fantasias for Flute</em> TWV 40:2-13</a></h3>
+<ul>
+<li>Baroque form models, implied polyphony, fantasia structure</li>
+</ul>
+<h3 id="sciarrino-flute-works-from-lopera-per-flauto"><a class="header" href="#sciarrino-flute-works-from-lopera-per-flauto">Sciarrino: Flute works from <em>L'opera per flauto</em></a></h3>
+<ul>
+<li>Sound figures, timbral obsession, extreme dynamics</li>
+</ul>
+<h2 id="listening-without-scores"><a class="header" href="#listening-without-scores">Listening Without Scores</a></h2>
+<ul>
+<li>Frans Brüggen recordings of Renaissance/Baroque recorder music</li>
+<li>Jeremias Schwarzer contemporary recorder recordings</li>
+<li>Recordings of Hosokawa's wind works</li>
+</ul>
+<h2 id="analysis-tasks"><a class="header" href="#analysis-tasks">Analysis Tasks</a></h2>
+<p>For each primary work, complete:</p>
+<ol>
+<li><strong>Gesture identification</strong> — List 3-5 recurring gestural shapes</li>
+<li><strong>Formal mapping</strong> — Diagram the structure</li>
+<li><strong>Breath placement</strong> — Mark where phrases breathe and why</li>
+<li><strong>Motive extraction</strong> — Identify the core motivic cells</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-1-compositional-projects"><a class="header" href="#semester-1-compositional-projects">Semester 1: Compositional Projects</a></h1>
+<h2 id="main-project-solo-tenor-recorder-piece-2-3-minutes"><a class="header" href="#main-project-solo-tenor-recorder-piece-2-3-minutes">Main Project: Solo Tenor Recorder Piece (2-3 minutes)</a></h2>
+<h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
+<ul>
+<li><strong>Single pitch collection</strong>: Choose one Messiaen mode or a custom 6-8 note collection</li>
+<li><strong>Maximum 3-5 defined gestures</strong>: Each must be recognizable and transformable</li>
+<li><strong>Breath-centered phrasing</strong>: Plan phrase lengths around natural breathing</li>
+<li><strong>No extended techniques yet</strong>: Focus on pitch, rhythm, and gesture first</li>
+</ul>
+<h3 id="process"><a class="header" href="#process">Process</a></h3>
+<ol>
+<li><strong>Week 1-2</strong>: Explore the pitch collection; generate 5-10 motive candidates</li>
+<li><strong>Week 3-4</strong>: Select 2-3 motives; define gestural vocabulary</li>
+<li><strong>Week 5-8</strong>: Compose the piece using transformation techniques</li>
+<li><strong>Week 9-10</strong>: Refine, notate professionally, create mockup</li>
+<li><strong>Week 11-12</strong>: Final polish, prepare for professor feedback</li>
+</ol>
+<h3 id="deliverable"><a class="header" href="#deliverable">Deliverable</a></h3>
+<ul>
+<li>Professional score (PDF)</li>
+<li>Audio mockup (using Versilian tenor recorder samples)</li>
+<li>Brief composer's note explaining pitch organization and gestural vocabulary</li>
+</ul>
+<hr />
+<h2 id="Étude-projects-weekly"><a class="header" href="#Étude-projects-weekly">Étude Projects (Weekly)</a></h2>
+<h3 id="Étude-1-motive-generation"><a class="header" href="#Étude-1-motive-generation">Étude 1: Motive Generation</a></h3>
+<ul>
+<li>Compose 5 distinct motives (3-5 notes each)</li>
+<li>For each, create 3 transformations</li>
+<li>Select the most promising for development</li>
+</ul>
+<h3 id="Étude-2-single-gesture-study"><a class="header" href="#Étude-2-single-gesture-study">Étude 2: Single-Gesture Study</a></h3>
+<ul>
+<li>30-second piece using only ONE gesture</li>
+<li>Explore all possible variations of that gesture</li>
+</ul>
+<h3 id="Étude-3-breath-study"><a class="header" href="#Étude-3-breath-study">Étude 3: Breath Study</a></h3>
+<ul>
+<li>Compose focusing on breath as structure</li>
+<li>Vary phrase lengths deliberately</li>
+<li>Inspired by Hosokawa approach</li>
+</ul>
+<h3 id="Étude-4-register-exploration"><a class="header" href="#Étude-4-register-exploration">Étude 4: Register Exploration</a></h3>
+<ul>
+<li>Map the tenor recorder's range</li>
+<li>Compose a study moving through all registers</li>
+<li>Note which areas have most expressive potential</li>
+</ul>
+<h3 id="Étude-5-pitch-class-constraint"><a class="header" href="#Étude-5-pitch-class-constraint">Étude 5: Pitch-Class Constraint</a></h3>
+<ul>
+<li>1-minute piece using only 4 pitches</li>
+<li>Maximum constraint, maximum creativity</li>
+</ul>
+<hr />
+<h2 id="off-syllabus-extension-if-time-permits"><a class="header" href="#off-syllabus-extension-if-time-permits">Off-Syllabus Extension (if time permits)</a></h2>
+<p>If Berklee requirements are satisfied by week 4:</p>
+<ul>
+<li><strong>Extended techniques exploration</strong>: Multiphonics, breath sounds, microtones</li>
+<li><strong>Second piece</strong>: 3-5 minute fantasia incorporating extended techniques</li>
+<li><strong>Historical form study</strong>: Compose a modern sarabande or allemande</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-1-weekly-breakdown"><a class="header" href="#semester-1-weekly-breakdown">Semester 1: Weekly Breakdown</a></h1>
+<h2 id="week-1-foundations"><a class="header" href="#week-1-foundations">Week 1: Foundations</a></h2>
+<h3 id="professor-meeting-focus"><a class="header" href="#professor-meeting-focus">Professor Meeting Focus</a></h3>
+<ul>
+<li>Introduction, skill assessment</li>
+<li>Discuss tenor recorder choice</li>
+<li>Review Debussy <em>Syrinx</em> together</li>
+</ul>
+<h3 id="self-study"><a class="header" href="#self-study">Self-Study</a></h3>
+<ul>
+<li>Read: Variego Ch. 1 (Melody)</li>
+<li>Read: Van Hauwe Vol. 1, Ch. 1-2 (Recorder basics)</li>
+<li>Listen: Brüggen recordings, Hosokawa <em>Vertical Song I</em></li>
+<li>Analyze: <em>Syrinx</em> gestural vocabulary</li>
+</ul>
+<h3 id="composition"><a class="header" href="#composition">Composition</a></h3>
+<ul>
+<li>Daily motive journal (5 motives)</li>
+<li>Étude 1: Motive generation</li>
+</ul>
+<hr />
+<h2 id="week-2-pitch-organization"><a class="header" href="#week-2-pitch-organization">Week 2: Pitch Organization</a></h2>
+<h3 id="professor-meeting-focus-1"><a class="header" href="#professor-meeting-focus-1">Professor Meeting Focus</a></h3>
+<ul>
+<li>Review motive journal</li>
+<li>Discuss pitch collection options</li>
+<li>Introduce Messiaen modes</li>
+</ul>
+<h3 id="self-study-1"><a class="header" href="#self-study-1">Self-Study</a></h3>
+<ul>
+<li>Read: Messiaen <em>Technique</em>, Ch. 1-2 (Modes)</li>
+<li>Read: Persichetti, Ch. 2 (Scales)</li>
+<li>Analyze: <em>Syrinx</em> pitch organization</li>
+</ul>
+<h3 id="composition-1"><a class="header" href="#composition-1">Composition</a></h3>
+<ul>
+<li>Choose pitch collection for main project</li>
+<li>Explore collection at the keyboard</li>
+<li>Étude 2: Single-gesture study</li>
+</ul>
+<hr />
+<h2 id="week-3-gestural-vocabulary"><a class="header" href="#week-3-gestural-vocabulary">Week 3: Gestural Vocabulary</a></h2>
+<h3 id="professor-meeting-focus-2"><a class="header" href="#professor-meeting-focus-2">Professor Meeting Focus</a></h3>
+<ul>
+<li>Review Étude 2</li>
+<li>Define gestural vocabulary for main project</li>
+<li>Discuss <em>Gesti</em> (Berio)</li>
+</ul>
+<h3 id="self-study-2"><a class="header" href="#self-study-2">Self-Study</a></h3>
+<ul>
+<li>Study: Berio <em>Gesti</em> score</li>
+<li>Read: Van Hauwe on recorder articulation</li>
+<li>Listen: Varèse <em>Density 21.5</em></li>
+</ul>
+<h3 id="composition-2"><a class="header" href="#composition-2">Composition</a></h3>
+<ul>
+<li>Define 3-5 gestures for main project</li>
+<li>Begin sketching opening</li>
+<li>Étude 3: Breath study</li>
+</ul>
+<hr />
+<h2 id="week-4-first-draft"><a class="header" href="#week-4-first-draft">Week 4: First Draft</a></h2>
+<h3 id="professor-meeting-focus-3"><a class="header" href="#professor-meeting-focus-3">Professor Meeting Focus</a></h3>
+<ul>
+<li>Review sketches</li>
+<li>Discuss form options</li>
+<li>Feedback on gesture vocabulary</li>
+</ul>
+<h3 id="self-study-3"><a class="header" href="#self-study-3">Self-Study</a></h3>
+<ul>
+<li>Read: Variego Ch. 4 (Form)</li>
+<li>Study: Telemann Fantasias formal structures</li>
+<li>Analyze: One Telemann Fantasia in detail</li>
+</ul>
+<h3 id="composition-3"><a class="header" href="#composition-3">Composition</a></h3>
+<ul>
+<li>Complete first draft (rough)</li>
+<li>Étude 4: Register exploration</li>
+</ul>
+<hr />
+<h2 id="weeks-5-8-development--refinement"><a class="header" href="#weeks-5-8-development--refinement">Weeks 5-8: Development &amp; Refinement</a></h2>
+<p><em>(Detailed breakdown to be added based on progress)</em></p>
+<h3 id="general-focus"><a class="header" href="#general-focus">General Focus</a></h3>
+<ul>
+<li>Transformation techniques applied</li>
+<li>Formal coherence developed</li>
+<li>Notation refined</li>
+<li>Mockup created</li>
+</ul>
+<hr />
+<h2 id="weeks-9-12-completion--extension"><a class="header" href="#weeks-9-12-completion--extension">Weeks 9-12: Completion &amp; Extension</a></h2>
+<p><em>(If standard requirements satisfied early, explore extended techniques and additional forms)</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-1-reflection--notes"><a class="header" href="#semester-1-reflection--notes">Semester 1: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress, discoveries, challenges, and insights throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester"><a class="header" href="#pre-semester">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point — what I already know:</strong></p>
+<p><strong>What I hope to learn:</strong></p>
+<p><strong>Concerns or anticipated challenges:</strong></p>
+<hr />
+<h2 id="weekly-reflections"><a class="header" href="#weekly-reflections">Weekly Reflections</a></h2>
+<h3 id="week-1"><a class="header" href="#week-1">Week 1</a></h3>
+<p><strong>Date:</strong></p>
+<p><strong>What worked well:</strong></p>
+<p><strong>What was challenging:</strong></p>
+<p><strong>Discoveries:</strong></p>
+<p><strong>Questions for next week:</strong></p>
+<hr />
+<h3 id="week-2"><a class="header" href="#week-2">Week 2</a></h3>
+<p><strong>Date:</strong></p>
+<p><strong>What worked well:</strong></p>
+<p><strong>What was challenging:</strong></p>
+<p><strong>Discoveries:</strong></p>
+<p><strong>Questions for next week:</strong></p>
+<hr />
+<p><em>(Continue for each week...)</em></p>
+<hr />
+<h2 id="mid-semester-check-in"><a class="header" href="#mid-semester-check-in">Mid-Semester Check-In</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Progress on main project:</strong></p>
+<p><strong>Most valuable technique learned so far:</strong></p>
+<p><strong>What needs more attention:</strong></p>
+<p><strong>Adjustments to plan:</strong></p>
+<hr />
+<h2 id="end-of-semester-reflection"><a class="header" href="#end-of-semester-reflection">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>What I accomplished:</strong></p>
+<p><strong>Most significant growth area:</strong></p>
+<p><strong>Techniques to continue developing:</strong></p>
+<p><strong>What I would do differently:</strong></p>
+<p><strong>Connections forward to Semester 2:</strong></p>
+<hr />
+<h2 id="professor-feedback-notes"><a class="header" href="#professor-feedback-notes">Professor Feedback Notes</a></h2>
+<p><em>(Record feedback from your professor here)</em></p>
+<p><strong>Week 1:</strong></p>
+<p><strong>Week 2:</strong></p>
+<p><em>(etc.)</em></p>
+<hr />
+<h2 id="pieces-completed"><a class="header" href="#pieces-completed">Pieces Completed</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Title</th><th>Duration</th><th>Date Completed</th><th>Notes</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h2 id="scores--recordings"><a class="header" href="#scores--recordings">Scores &amp; Recordings</a></h2>
+<p><em>(Links or references to your completed work)</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-2-solo-piano--keyboard-thinking"><a class="header" href="#semester-2-solo-piano--keyboard-thinking">Semester 2: Solo Piano — Keyboard Thinking</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-14"><a class="header" href="#overview-14">Overview</a></h2>
+<p>Semester 2 transitions from monophonic to polyphonic thinking through solo piano composition. This semester develops the ability to think in multiple voices while maintaining cell-based coherence.</p>
+<h2 id="key-topics-13"><a class="header" href="#key-topics-13">Key Topics</a></h2>
+<ul>
+<li>Keyboard idiom and texture</li>
+<li>Voice leading from cells</li>
+<li>Registral distribution</li>
+<li>Pedaling as compositional element</li>
+</ul>
+<h2 id="notes-13"><a class="header" href="#notes-13">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-2-berklee-requirements"><a class="header" href="#semester-2-berklee-requirements">Semester 2: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-composition-lesson-level-2"><a class="header" href="#official-course-private-composition-lesson-level-2">Official Course: Private Composition Lesson Level 2</a></h2>
+<p>Level 2 focuses on composing for <strong>solo piano</strong>.</p>
+<h2 id="learning-outcomes-1"><a class="header" href="#learning-outcomes-1">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-1"><a class="header" href="#source-1">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-2">Berklee Online: Private Composition Lesson Level 2</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-2-cell-to-score-focus"><a class="header" href="#semester-2-cell-to-score-focus">Semester 2: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-15"><a class="header" href="#overview-15">Overview</a></h2>
+<p>This semester expands cell-based techniques to polyphonic texture.</p>
+<h2 id="key-topics-14"><a class="header" href="#key-topics-14">Key Topics</a></h2>
+<ul>
+<li>Cell distribution across voices</li>
+<li>Contrapuntal transformation</li>
+<li>Textural density from cells</li>
+<li>Keyboard-specific gestures</li>
+</ul>
+<h2 id="notes-14"><a class="header" href="#notes-14">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-2-repertoire-to-study"><a class="header" href="#semester-2-repertoire-to-study">Semester 2: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-16"><a class="header" href="#overview-16">Overview</a></h2>
+<p>Piano repertoire for analysis, focusing on cell-based and motivic approaches.</p>
+<h2 id="key-topics-15"><a class="header" href="#key-topics-15">Key Topics</a></h2>
+<ul>
+<li>Bartók piano works</li>
+<li>Messiaen piano music</li>
+<li>Contemporary American piano music</li>
+<li>Ligeti études</li>
+</ul>
+<h2 id="notes-15"><a class="header" href="#notes-15">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-2-compositional-projects"><a class="header" href="#semester-2-compositional-projects">Semester 2: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-17"><a class="header" href="#overview-17">Overview</a></h2>
+<p>Solo piano composition projects for this semester.</p>
+<h2 id="key-topics-16"><a class="header" href="#key-topics-16">Key Topics</a></h2>
+<ul>
+<li>Main project: Solo piano piece</li>
+<li>Étude projects</li>
+<li>Extension options</li>
+</ul>
+<h2 id="notes-16"><a class="header" href="#notes-16">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-2-reflection--notes"><a class="header" href="#semester-2-reflection--notes">Semester 2: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress, discoveries, challenges, and insights throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-1"><a class="header" href="#pre-semester-1">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-1"><a class="header" href="#weekly-reflections-1">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-1"><a class="header" href="#end-of-semester-reflection-1">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Growth areas:</strong></p>
+<p><strong>Connections to Semester 3:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-3-small-chamber--dialogue--interaction"><a class="header" href="#semester-3-small-chamber--dialogue--interaction">Semester 3: Small Chamber — Dialogue &amp; Interaction</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-18"><a class="header" href="#overview-18">Overview</a></h2>
+<p>Semester 3 introduces interaction between instruments, exploring how cells pass between voices and how dialogue emerges from shared material.</p>
+<h2 id="key-topics-17"><a class="header" href="#key-topics-17">Key Topics</a></h2>
+<ul>
+<li>Dialogue and exchange</li>
+<li>Shared vs. differentiated material</li>
+<li>Timbral combinations</li>
+<li>Small ensemble balance</li>
+</ul>
+<h2 id="notes-17"><a class="header" href="#notes-17">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-3-berklee-requirements"><a class="header" href="#semester-3-berklee-requirements">Semester 3: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-composition-lesson-level-3"><a class="header" href="#official-course-private-composition-lesson-level-3">Official Course: Private Composition Lesson Level 3</a></h2>
+<p>Level 3 focuses on composing for <strong>small chamber ensemble</strong>.</p>
+<h2 id="learning-outcomes-2"><a class="header" href="#learning-outcomes-2">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-2"><a class="header" href="#source-2">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-3">Berklee Online: Private Composition Lesson Level 3</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-3-cell-to-score-focus"><a class="header" href="#semester-3-cell-to-score-focus">Semester 3: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-19"><a class="header" href="#overview-19">Overview</a></h2>
+<p>Expanding cell-based techniques to multiple instruments.</p>
+<h2 id="key-topics-18"><a class="header" href="#key-topics-18">Key Topics</a></h2>
+<ul>
+<li>Cell exchange between instruments</li>
+<li>Heterophony from shared cells</li>
+<li>Timbral transformation of cells</li>
+<li>Ensemble gesture</li>
+</ul>
+<h2 id="notes-18"><a class="header" href="#notes-18">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-3-repertoire-to-study"><a class="header" href="#semester-3-repertoire-to-study">Semester 3: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-20"><a class="header" href="#overview-20">Overview</a></h2>
+<p>Chamber repertoire for analysis, focusing on dialogue and interaction.</p>
+<h2 id="key-topics-19"><a class="header" href="#key-topics-19">Key Topics</a></h2>
+<ul>
+<li>Webern chamber works</li>
+<li>Bartók string quartets</li>
+<li>Contemporary duos and trios</li>
+<li>Historical chamber models</li>
+</ul>
+<h2 id="notes-19"><a class="header" href="#notes-19">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-3-compositional-projects"><a class="header" href="#semester-3-compositional-projects">Semester 3: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-21"><a class="header" href="#overview-21">Overview</a></h2>
+<p>Small chamber composition projects for this semester.</p>
+<h2 id="key-topics-20"><a class="header" href="#key-topics-20">Key Topics</a></h2>
+<ul>
+<li>Main project: Chamber piece for 2-3 instruments</li>
+<li>Étude projects</li>
+<li>Extension options</li>
+</ul>
+<h2 id="notes-20"><a class="header" href="#notes-20">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-3-reflection--notes"><a class="header" href="#semester-3-reflection--notes">Semester 3: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress, discoveries, challenges, and insights throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-2"><a class="header" href="#pre-semester-2">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-2"><a class="header" href="#weekly-reflections-2">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-2"><a class="header" href="#end-of-semester-reflection-2">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Growth areas:</strong></p>
+<p><strong>Phase I Summary:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="phase-i-reflection-solo-foundations"><a class="header" href="#phase-i-reflection-solo-foundations">Phase I Reflection: Solo Foundations</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-22"><a class="header" href="#overview-22">Overview</a></h2>
+<p>Reflect on the three semesters of Phase I and prepare for the transition to chamber expansion.</p>
+<h2 id="key-topics-21"><a class="header" href="#key-topics-21">Key Topics</a></h2>
+<ul>
+<li>Skills developed in Phase I</li>
+<li>Techniques mastered</li>
+<li>Areas for continued growth</li>
+<li>Preparation for Phase II</li>
+</ul>
+<h2 id="notes-21"><a class="header" href="#notes-21">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-4-larger-chamber--texture--stratification"><a class="header" href="#semester-4-larger-chamber--texture--stratification">Semester 4: Larger Chamber — Texture &amp; Stratification</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-23"><a class="header" href="#overview-23">Overview</a></h2>
+<p>Semester 4 expands to larger chamber forces, exploring texture and stratification as compositional tools.</p>
+<h2 id="key-topics-22"><a class="header" href="#key-topics-22">Key Topics</a></h2>
+<ul>
+<li>Textural density and transparency</li>
+<li>Stratified layers</li>
+<li>Ensemble balance</li>
+<li>Extended chamber combinations</li>
+</ul>
+<h2 id="notes-22"><a class="header" href="#notes-22">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-4-berklee-requirements"><a class="header" href="#semester-4-berklee-requirements">Semester 4: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-composition-lesson-level-4"><a class="header" href="#official-course-private-composition-lesson-level-4">Official Course: Private Composition Lesson Level 4</a></h2>
+<p>Level 4 focuses on composing for <strong>larger chamber ensemble</strong>.</p>
+<h2 id="learning-outcomes-3"><a class="header" href="#learning-outcomes-3">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-3"><a class="header" href="#source-3">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-4">Berklee Online: Private Composition Lesson Level 4</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-4-cell-to-score-focus"><a class="header" href="#semester-4-cell-to-score-focus">Semester 4: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-24"><a class="header" href="#overview-24">Overview</a></h2>
+<p>Cell-based techniques at larger chamber scale.</p>
+<h2 id="key-topics-23"><a class="header" href="#key-topics-23">Key Topics</a></h2>
+<ul>
+<li>Cell distribution across larger forces</li>
+<li>Textural transformation of cells</li>
+<li>Stratified cell activity</li>
+<li>Group gestures</li>
+</ul>
+<h2 id="notes-23"><a class="header" href="#notes-23">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-4-repertoire-to-study"><a class="header" href="#semester-4-repertoire-to-study">Semester 4: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-25"><a class="header" href="#overview-25">Overview</a></h2>
+<p>Larger chamber repertoire for analysis.</p>
+<h2 id="key-topics-24"><a class="header" href="#key-topics-24">Key Topics</a></h2>
+<ul>
+<li>Wind quintets and sextets</li>
+<li>Mixed ensembles</li>
+<li>Contemporary chamber works</li>
+<li>Stratification models</li>
+</ul>
+<h2 id="notes-24"><a class="header" href="#notes-24">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-4-compositional-projects"><a class="header" href="#semester-4-compositional-projects">Semester 4: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-26"><a class="header" href="#overview-26">Overview</a></h2>
+<p>Larger chamber composition projects.</p>
+<h2 id="key-topics-25"><a class="header" href="#key-topics-25">Key Topics</a></h2>
+<ul>
+<li>Main project: Chamber piece for 4-6 instruments</li>
+<li>Étude projects</li>
+<li>Extension options</li>
+</ul>
+<h2 id="notes-25"><a class="header" href="#notes-25">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-4-reflection--notes"><a class="header" href="#semester-4-reflection--notes">Semester 4: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-3"><a class="header" href="#pre-semester-3">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-3"><a class="header" href="#weekly-reflections-3">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-3"><a class="header" href="#end-of-semester-reflection-3">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Growth areas:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-5-voice--text--the-singing-line"><a class="header" href="#semester-5-voice--text--the-singing-line">Semester 5: Voice &amp; Text — The Singing Line</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-27"><a class="header" href="#overview-27">Overview</a></h2>
+<p>Semester 5 introduces the voice and text-setting, exploring how cells interact with language and the singing line.</p>
+<h2 id="key-topics-26"><a class="header" href="#key-topics-26">Key Topics</a></h2>
+<ul>
+<li>Text and music relationship</li>
+<li>Vocal writing</li>
+<li>Word painting from cells</li>
+<li>Prosody and rhythm</li>
+</ul>
+<h2 id="notes-26"><a class="header" href="#notes-26">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-5-berklee-requirements"><a class="header" href="#semester-5-berklee-requirements">Semester 5: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-composition-lesson-level-5"><a class="header" href="#official-course-private-composition-lesson-level-5">Official Course: Private Composition Lesson Level 5</a></h2>
+<p>Level 5 focuses on composing for <strong>voice and instruments</strong>.</p>
+<h2 id="learning-outcomes-4"><a class="header" href="#learning-outcomes-4">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-4"><a class="header" href="#source-4">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-5">Berklee Online: Private Composition Lesson Level 5</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-5-cell-to-score-focus"><a class="header" href="#semester-5-cell-to-score-focus">Semester 5: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-28"><a class="header" href="#overview-28">Overview</a></h2>
+<p>Cell-based techniques in vocal music.</p>
+<h2 id="key-topics-27"><a class="header" href="#key-topics-27">Key Topics</a></h2>
+<ul>
+<li>Text-derived cells</li>
+<li>Melodic cells and prosody</li>
+<li>Accompaniment cells</li>
+<li>Word-music integration</li>
+</ul>
+<h2 id="notes-27"><a class="header" href="#notes-27">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-5-repertoire-to-study"><a class="header" href="#semester-5-repertoire-to-study">Semester 5: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-29"><a class="header" href="#overview-29">Overview</a></h2>
+<p>Vocal repertoire for analysis.</p>
+<h2 id="key-topics-28"><a class="header" href="#key-topics-28">Key Topics</a></h2>
+<ul>
+<li>Art song tradition</li>
+<li>Contemporary vocal works</li>
+<li>Text-setting approaches</li>
+<li>Chamber vocal works</li>
+</ul>
+<h2 id="notes-28"><a class="header" href="#notes-28">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-5-compositional-projects"><a class="header" href="#semester-5-compositional-projects">Semester 5: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-30"><a class="header" href="#overview-30">Overview</a></h2>
+<p>Vocal composition projects.</p>
+<h2 id="key-topics-29"><a class="header" href="#key-topics-29">Key Topics</a></h2>
+<ul>
+<li>Main project: Song or vocal chamber work</li>
+<li>Text selection</li>
+<li>Étude projects</li>
+</ul>
+<h2 id="notes-29"><a class="header" href="#notes-29">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-5-reflection--notes"><a class="header" href="#semester-5-reflection--notes">Semester 5: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-4"><a class="header" href="#pre-semester-4">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-4"><a class="header" href="#weekly-reflections-4">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-4"><a class="header" href="#end-of-semester-reflection-4">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Growth areas:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-6-conducting--score-as-architecture"><a class="header" href="#semester-6-conducting--score-as-architecture">Semester 6: Conducting — Score as Architecture</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-31"><a class="header" href="#overview-31">Overview</a></h2>
+<p>Semester 6 focuses on conducting studies, developing understanding of the score as architectural document and learning to communicate musical ideas to performers.</p>
+<h2 id="key-topics-30"><a class="header" href="#key-topics-30">Key Topics</a></h2>
+<ul>
+<li>Score reading and analysis</li>
+<li>Conducting technique</li>
+<li>Rehearsal strategies</li>
+<li>Score as architecture</li>
+</ul>
+<h2 id="notes-30"><a class="header" href="#notes-30">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-6-berklee-requirements"><a class="header" href="#semester-6-berklee-requirements">Semester 6: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-conducting-lesson"><a class="header" href="#official-course-private-conducting-lesson">Official Course: Private Conducting Lesson</a></h2>
+<p>Level 6 focuses on <strong>conducting studies</strong>.</p>
+<h2 id="learning-outcomes-5"><a class="header" href="#learning-outcomes-5">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-5"><a class="header" href="#source-5">Source</a></h2>
+<p><a href="https://online.berklee.edu">Berklee Online Conducting Courses</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-6-cell-to-score-focus"><a class="header" href="#semester-6-cell-to-score-focus">Semester 6: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-32"><a class="header" href="#overview-32">Overview</a></h2>
+<p>Understanding cells from the conductor's perspective.</p>
+<h2 id="key-topics-31"><a class="header" href="#key-topics-31">Key Topics</a></h2>
+<ul>
+<li>Identifying cells in scores</li>
+<li>Communicating cell structure to performers</li>
+<li>Gestural conducting of cellular music</li>
+<li>Architectural thinking</li>
+</ul>
+<h2 id="notes-31"><a class="header" href="#notes-31">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-6-repertoire-to-study"><a class="header" href="#semester-6-repertoire-to-study">Semester 6: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-33"><a class="header" href="#overview-33">Overview</a></h2>
+<p>Conducting repertoire for study.</p>
+<h2 id="key-topics-32"><a class="header" href="#key-topics-32">Key Topics</a></h2>
+<ul>
+<li>Chamber ensemble scores</li>
+<li>Orchestral excerpts</li>
+<li>Contemporary conducting challenges</li>
+<li>Cell-based works for conducting</li>
+</ul>
+<h2 id="notes-32"><a class="header" href="#notes-32">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-6-compositional-projects"><a class="header" href="#semester-6-compositional-projects">Semester 6: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-34"><a class="header" href="#overview-34">Overview</a></h2>
+<p>Conducting projects and composition from conductor's perspective.</p>
+<h2 id="key-topics-33"><a class="header" href="#key-topics-33">Key Topics</a></h2>
+<ul>
+<li>Conducting performances</li>
+<li>Score study projects</li>
+<li>Composition with conductor's insight</li>
+</ul>
+<h2 id="notes-33"><a class="header" href="#notes-33">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-6-reflection--notes"><a class="header" href="#semester-6-reflection--notes">Semester 6: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-5"><a class="header" href="#pre-semester-5">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-5"><a class="header" href="#weekly-reflections-5">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-5"><a class="header" href="#end-of-semester-reflection-5">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Growth areas:</strong></p>
+<p><strong>Phase II Summary:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="phase-ii-reflection-chamber-expansion"><a class="header" href="#phase-ii-reflection-chamber-expansion">Phase II Reflection: Chamber Expansion</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-35"><a class="header" href="#overview-35">Overview</a></h2>
+<p>Reflect on the three semesters of Phase II and prepare for the transition to orchestral scope.</p>
+<h2 id="key-topics-34"><a class="header" href="#key-topics-34">Key Topics</a></h2>
+<ul>
+<li>Skills developed in Phase II</li>
+<li>Chamber techniques mastered</li>
+<li>Areas for continued growth</li>
+<li>Preparation for Phase III</li>
+</ul>
+<h2 id="notes-34"><a class="header" href="#notes-34">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-7-large-ensemble-i--orchestral-thinking"><a class="header" href="#semester-7-large-ensemble-i--orchestral-thinking">Semester 7: Large Ensemble I — Orchestral Thinking</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-36"><a class="header" href="#overview-36">Overview</a></h2>
+<p>Semester 7 introduces orchestral forces, developing the ability to think in orchestral colors while maintaining cell-based coherence at large scale.</p>
+<h2 id="key-topics-35"><a class="header" href="#key-topics-35">Key Topics</a></h2>
+<ul>
+<li>Orchestration fundamentals</li>
+<li>Cell projection at orchestral scale</li>
+<li>Orchestral texture and balance</li>
+<li>Large-scale form</li>
+</ul>
+<h2 id="notes-35"><a class="header" href="#notes-35">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-7-berklee-requirements"><a class="header" href="#semester-7-berklee-requirements">Semester 7: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-composition-lesson-level-7"><a class="header" href="#official-course-private-composition-lesson-level-7">Official Course: Private Composition Lesson Level 7</a></h2>
+<p>Level 7 focuses on composing for <strong>large ensemble/orchestra</strong>.</p>
+<h2 id="learning-outcomes-6"><a class="header" href="#learning-outcomes-6">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-6"><a class="header" href="#source-6">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-7">Berklee Online: Private Composition Lesson Level 7</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-7-cell-to-score-focus"><a class="header" href="#semester-7-cell-to-score-focus">Semester 7: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-37"><a class="header" href="#overview-37">Overview</a></h2>
+<p>Cell-based techniques at orchestral scale.</p>
+<h2 id="key-topics-36"><a class="header" href="#key-topics-36">Key Topics</a></h2>
+<ul>
+<li>Orchestral projection of cells</li>
+<li>Timbral transformation across sections</li>
+<li>Large-scale cell architecture</li>
+<li>Orchestral gesture</li>
+</ul>
+<h2 id="notes-36"><a class="header" href="#notes-36">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-7-repertoire-to-study"><a class="header" href="#semester-7-repertoire-to-study">Semester 7: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-38"><a class="header" href="#overview-38">Overview</a></h2>
+<p>Orchestral repertoire for analysis.</p>
+<h2 id="key-topics-37"><a class="header" href="#key-topics-37">Key Topics</a></h2>
+<ul>
+<li>20th/21st-century orchestral works</li>
+<li>Cell-based orchestral music</li>
+<li>Orchestration models</li>
+<li>Large-scale form examples</li>
+</ul>
+<h2 id="notes-37"><a class="header" href="#notes-37">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-7-compositional-projects"><a class="header" href="#semester-7-compositional-projects">Semester 7: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-39"><a class="header" href="#overview-39">Overview</a></h2>
+<p>Orchestral composition projects.</p>
+<h2 id="key-topics-38"><a class="header" href="#key-topics-38">Key Topics</a></h2>
+<ul>
+<li>Main project: Orchestral work (movement or short piece)</li>
+<li>Orchestration études</li>
+<li>Extension options</li>
+</ul>
+<h2 id="notes-38"><a class="header" href="#notes-38">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-7-reflection--notes"><a class="header" href="#semester-7-reflection--notes">Semester 7: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-6"><a class="header" href="#pre-semester-6">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-6"><a class="header" href="#weekly-reflections-6">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-6"><a class="header" href="#end-of-semester-reflection-6">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Growth areas:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-8-large-ensemble-ii--completion--refinement"><a class="header" href="#semester-8-large-ensemble-ii--completion--refinement">Semester 8: Large Ensemble II — Completion &amp; Refinement</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-40"><a class="header" href="#overview-40">Overview</a></h2>
+<p>Semester 8 continues orchestral work with focus on completing and refining larger works.</p>
+<h2 id="key-topics-39"><a class="header" href="#key-topics-39">Key Topics</a></h2>
+<ul>
+<li>Extended orchestral forms</li>
+<li>Completion and revision</li>
+<li>Professional score preparation</li>
+<li>Portfolio development</li>
+</ul>
+<h2 id="notes-39"><a class="header" href="#notes-39">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-8-berklee-requirements"><a class="header" href="#semester-8-berklee-requirements">Semester 8: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-composition-lesson-level-8"><a class="header" href="#official-course-private-composition-lesson-level-8">Official Course: Private Composition Lesson Level 8</a></h2>
+<p>Level 8 continues work on <strong>large ensemble composition</strong>.</p>
+<h2 id="learning-outcomes-7"><a class="header" href="#learning-outcomes-7">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-7"><a class="header" href="#source-7">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-8">Berklee Online: Private Composition Lesson Level 8</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-8-cell-to-score-focus"><a class="header" href="#semester-8-cell-to-score-focus">Semester 8: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-41"><a class="header" href="#overview-41">Overview</a></h2>
+<p>Advanced cell-based orchestral techniques.</p>
+<h2 id="key-topics-40"><a class="header" href="#key-topics-40">Key Topics</a></h2>
+<ul>
+<li>Extended cell development</li>
+<li>Large-scale cell architecture</li>
+<li>Refinement and revision</li>
+<li>Integration of techniques</li>
+</ul>
+<h2 id="notes-40"><a class="header" href="#notes-40">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-8-repertoire-to-study"><a class="header" href="#semester-8-repertoire-to-study">Semester 8: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-42"><a class="header" href="#overview-42">Overview</a></h2>
+<p>Advanced orchestral repertoire for analysis.</p>
+<h2 id="key-topics-41"><a class="header" href="#key-topics-41">Key Topics</a></h2>
+<ul>
+<li>Extended orchestral works</li>
+<li>Large-scale form models</li>
+<li>Contemporary orchestral language</li>
+<li>Integration examples</li>
+</ul>
+<h2 id="notes-41"><a class="header" href="#notes-41">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-8-compositional-projects"><a class="header" href="#semester-8-compositional-projects">Semester 8: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-43"><a class="header" href="#overview-43">Overview</a></h2>
+<p>Extended orchestral composition projects.</p>
+<h2 id="key-topics-42"><a class="header" href="#key-topics-42">Key Topics</a></h2>
+<ul>
+<li>Main project: Extended orchestral work</li>
+<li>Revision of previous works</li>
+<li>Portfolio preparation</li>
+</ul>
+<h2 id="notes-42"><a class="header" href="#notes-42">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-8-reflection--notes"><a class="header" href="#semester-8-reflection--notes">Semester 8: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-7"><a class="header" href="#pre-semester-7">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-7"><a class="header" href="#weekly-reflections-7">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-7"><a class="header" href="#end-of-semester-reflection-7">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Growth areas:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-9-electroacoustic-capstone--integration"><a class="header" href="#semester-9-electroacoustic-capstone--integration">Semester 9: Electroacoustic Capstone — Integration</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-44"><a class="header" href="#overview-44">Overview</a></h2>
+<p>The capstone semester integrates all techniques learned with electroacoustic elements, representing the culmination of the nine-semester journey.</p>
+<h2 id="key-topics-43"><a class="header" href="#key-topics-43">Key Topics</a></h2>
+<ul>
+<li>Electroacoustic composition</li>
+<li>Integration of acoustic and electronic</li>
+<li>Cell-based electroacoustic techniques</li>
+<li>Capstone project</li>
+</ul>
+<h2 id="notes-43"><a class="header" href="#notes-43">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-9-berklee-requirements"><a class="header" href="#semester-9-berklee-requirements">Semester 9: Berklee Requirements</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="official-course-private-composition-lesson-level-9"><a class="header" href="#official-course-private-composition-lesson-level-9">Official Course: Private Composition Lesson Level 9</a></h2>
+<p>Level 9 focuses on <strong>electroacoustic composition</strong> as the capstone experience.</p>
+<h2 id="learning-outcomes-8"><a class="header" href="#learning-outcomes-8">Learning Outcomes</a></h2>
+<p><em>(To be added from Berklee course page)</em></p>
+<h2 id="source-8"><a class="header" href="#source-8">Source</a></h2>
+<p><a href="https://online.berklee.edu/courses/private-composition-lesson-level-9">Berklee Online: Private Composition Lesson Level 9</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-9-cell-to-score-focus"><a class="header" href="#semester-9-cell-to-score-focus">Semester 9: Cell-to-Score Focus</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-45"><a class="header" href="#overview-45">Overview</a></h2>
+<p>Integration of all cell-based techniques with electroacoustic elements.</p>
+<h2 id="key-topics-44"><a class="header" href="#key-topics-44">Key Topics</a></h2>
+<ul>
+<li>Electroacoustic cell techniques</li>
+<li>Spectral cells</li>
+<li>Transformation through electronics</li>
+<li>Hybrid acoustic/electronic cells</li>
+</ul>
+<h2 id="notes-44"><a class="header" href="#notes-44">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-9-repertoire-to-study"><a class="header" href="#semester-9-repertoire-to-study">Semester 9: Repertoire to Study</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-46"><a class="header" href="#overview-46">Overview</a></h2>
+<p>Electroacoustic and hybrid repertoire for analysis.</p>
+<h2 id="key-topics-45"><a class="header" href="#key-topics-45">Key Topics</a></h2>
+<ul>
+<li>Mixed music (acoustic + electronics)</li>
+<li>Spectral music</li>
+<li>Live electronics works</li>
+<li>Contemporary electroacoustic</li>
+</ul>
+<h2 id="notes-45"><a class="header" href="#notes-45">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-9-compositional-projects"><a class="header" href="#semester-9-compositional-projects">Semester 9: Compositional Projects</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-47"><a class="header" href="#overview-47">Overview</a></h2>
+<p>Capstone electroacoustic composition projects.</p>
+<h2 id="key-topics-46"><a class="header" href="#key-topics-46">Key Topics</a></h2>
+<ul>
+<li>Main project: Electroacoustic work</li>
+<li>Integration of nine-semester learning</li>
+<li>Portfolio completion</li>
+</ul>
+<h2 id="notes-46"><a class="header" href="#notes-46">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="semester-9-reflection--notes"><a class="header" href="#semester-9-reflection--notes">Semester 9: Reflection &amp; Notes</a></h1>
+<p><em>Use this space to document your progress throughout the semester.</em></p>
+<hr />
+<h2 id="pre-semester-8"><a class="header" href="#pre-semester-8">Pre-Semester</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Starting point:</strong></p>
+<p><strong>Goals:</strong></p>
+<hr />
+<h2 id="weekly-reflections-8"><a class="header" href="#weekly-reflections-8">Weekly Reflections</a></h2>
+<p><em>(Add entries as you progress)</em></p>
+<hr />
+<h2 id="end-of-semester-reflection-8"><a class="header" href="#end-of-semester-reflection-8">End-of-Semester Reflection</a></h2>
+<p><strong>Date:</strong></p>
+<p><strong>Accomplishments:</strong></p>
+<p><strong>Nine-Semester Journey Summary:</strong></p>
+<p><strong>Future directions:</strong></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="phase-iii-reflection-integration--personal-voice"><a class="header" href="#phase-iii-reflection-integration--personal-voice">Phase III Reflection: Integration &amp; Personal Voice</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-48"><a class="header" href="#overview-48">Overview</a></h2>
+<p>Reflect on the three semesters of Phase III and the complete nine-semester journey.</p>
+<h2 id="key-topics-47"><a class="header" href="#key-topics-47">Key Topics</a></h2>
+<ul>
+<li>Skills developed in Phase III</li>
+<li>Orchestral and electroacoustic techniques mastered</li>
+<li>Personal voice development</li>
+<li>Future compositional directions</li>
+</ul>
+<h2 id="notes-47"><a class="header" href="#notes-47">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Étude-practices--daily-exercises"><a class="header" href="#Étude-practices--daily-exercises">Étude Practices &amp; Daily Exercises</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-49"><a class="header" href="#overview-49">Overview</a></h2>
+<p>This section outlines the daily and weekly practices that build compositional fluency over the nine semesters.</p>
+<h2 id="key-topics-48"><a class="header" href="#key-topics-48">Key Topics</a></h2>
+<ul>
+<li>Daily practice routines</li>
+<li>Étude structure and progression</li>
+<li>Building compositional habits</li>
+<li>Tracking progress</li>
+</ul>
+<h2 id="notes-48"><a class="header" href="#notes-48">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-motive-journal"><a class="header" href="#the-motive-journal">The Motive Journal</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-50"><a class="header" href="#overview-50">Overview</a></h2>
+<p>The motive journal is a daily practice of generating and documenting motivic ideas.</p>
+<h2 id="key-topics-49"><a class="header" href="#key-topics-49">Key Topics</a></h2>
+<ul>
+<li>Daily motive generation</li>
+<li>Documentation methods</li>
+<li>Review and selection</li>
+<li>Building a motive vocabulary</li>
+</ul>
+<h2 id="notes-49"><a class="header" href="#notes-49">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="constrained-duration-exercises"><a class="header" href="#constrained-duration-exercises">Constrained Duration Exercises</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-51"><a class="header" href="#overview-51">Overview</a></h2>
+<p>Short, focused exercises with strict constraints that force creative solutions.</p>
+<h2 id="key-topics-50"><a class="header" href="#key-topics-50">Key Topics</a></h2>
+<ul>
+<li>1-minute exercises</li>
+<li>5-minute exercises</li>
+<li>Pitch constraints</li>
+<li>Rhythm constraints</li>
+<li>Gestural constraints</li>
+</ul>
+<h2 id="notes-50"><a class="header" href="#notes-50">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="model-imitation-studies"><a class="header" href="#model-imitation-studies">Model Imitation Studies</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-52"><a class="header" href="#overview-52">Overview</a></h2>
+<p>Learning through imitation of masterworks—a time-honored pedagogical approach.</p>
+<h2 id="key-topics-51"><a class="header" href="#key-topics-51">Key Topics</a></h2>
+<ul>
+<li>Choosing models</li>
+<li>Analysis for imitation</li>
+<li>Imitation techniques</li>
+<li>Developing personal voice through imitation</li>
+</ul>
+<h2 id="notes-51"><a class="header" href="#notes-51">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="analytical-composition"><a class="header" href="#analytical-composition">Analytical Composition</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-53"><a class="header" href="#overview-53">Overview</a></h2>
+<p>Composing as a form of analysis—creating works that demonstrate understanding of techniques.</p>
+<h2 id="key-topics-52"><a class="header" href="#key-topics-52">Key Topics</a></h2>
+<ul>
+<li>Analysis through composition</li>
+<li>Technique demonstration pieces</li>
+<li>Systematic exploration</li>
+<li>Documentation and reflection</li>
+</ul>
+<h2 id="notes-52"><a class="header" href="#notes-52">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="weekly-Étude-progressions"><a class="header" href="#weekly-Étude-progressions">Weekly Étude Progressions</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-54"><a class="header" href="#overview-54">Overview</a></h2>
+<p>Structured weekly étude sequences that build skills progressively.</p>
+<h2 id="key-topics-53"><a class="header" href="#key-topics-53">Key Topics</a></h2>
+<ul>
+<li>Week-by-week progressions</li>
+<li>Skill building sequences</li>
+<li>Integration with semester work</li>
+<li>Assessment and adjustment</li>
+</ul>
+<h2 id="notes-53"><a class="header" href="#notes-53">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="a-repertoire-lists"><a class="header" href="#a-repertoire-lists">A: Repertoire Lists</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-55"><a class="header" href="#overview-55">Overview</a></h2>
+<p>Comprehensive repertoire lists organized by instrumentation and technique.</p>
+<h2 id="key-topics-54"><a class="header" href="#key-topics-54">Key Topics</a></h2>
+<ul>
+<li>Repertoire organization</li>
+<li>Study priorities</li>
+<li>Recordings and scores</li>
+<li>Analysis resources</li>
+</ul>
+<h2 id="notes-54"><a class="header" href="#notes-54">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="solo-wind-repertoire"><a class="header" href="#solo-wind-repertoire">Solo Wind Repertoire</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-56"><a class="header" href="#overview-56">Overview</a></h2>
+<p>Solo wind works for study, organized by instrument and technique.</p>
+<h2 id="key-topics-55"><a class="header" href="#key-topics-55">Key Topics</a></h2>
+<ul>
+<li>Flute repertoire</li>
+<li>Oboe repertoire</li>
+<li>Clarinet repertoire</li>
+<li>Other winds</li>
+<li>Cross-instrument techniques</li>
+</ul>
+<h2 id="notes-55"><a class="header" href="#notes-55">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contemporary-recorder-works"><a class="header" href="#contemporary-recorder-works">Contemporary Recorder Works</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-57"><a class="header" href="#overview-57">Overview</a></h2>
+<p>Contemporary recorder repertoire, from Berio's <em>Gesti</em> to present.</p>
+<h2 id="key-topics-56"><a class="header" href="#key-topics-56">Key Topics</a></h2>
+<ul>
+<li>Landmark works</li>
+<li>Extended technique pieces</li>
+<li>Consort works</li>
+<li>Recorder with electronics</li>
+<li>Resources (CCBM, Recorder Map)</li>
+</ul>
+<h2 id="notes-56"><a class="header" href="#notes-56">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chamber-music"><a class="header" href="#chamber-music">Chamber Music</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-58"><a class="header" href="#overview-58">Overview</a></h2>
+<p>Chamber music repertoire organized by ensemble size and type.</p>
+<h2 id="key-topics-57"><a class="header" href="#key-topics-57">Key Topics</a></h2>
+<ul>
+<li>Duos</li>
+<li>Trios</li>
+<li>Quartets</li>
+<li>Larger chamber ensembles</li>
+<li>Mixed ensembles</li>
+</ul>
+<h2 id="notes-57"><a class="header" href="#notes-57">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="orchestral-works"><a class="header" href="#orchestral-works">Orchestral Works</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-59"><a class="header" href="#overview-59">Overview</a></h2>
+<p>Orchestral repertoire for study, emphasizing cell-based approaches.</p>
+<h2 id="key-topics-58"><a class="header" href="#key-topics-58">Key Topics</a></h2>
+<ul>
+<li>20th-century orchestral works</li>
+<li>Contemporary orchestral music</li>
+<li>Orchestration models</li>
+<li>Cell-based orchestral music</li>
+</ul>
+<h2 id="notes-58"><a class="header" href="#notes-58">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="b-technique-catalogues"><a class="header" href="#b-technique-catalogues">B: Technique Catalogues</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-60"><a class="header" href="#overview-60">Overview</a></h2>
+<p>Reference catalogues of compositional and instrumental techniques.</p>
+<h2 id="key-topics-59"><a class="header" href="#key-topics-59">Key Topics</a></h2>
+<ul>
+<li>Transformation techniques</li>
+<li>Extended techniques by instrument</li>
+<li>Notational conventions</li>
+<li>Contemporary practice</li>
+</ul>
+<h2 id="notes-59"><a class="header" href="#notes-59">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="motivic-transformation-techniques"><a class="header" href="#motivic-transformation-techniques">Motivic Transformation Techniques</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-61"><a class="header" href="#overview-61">Overview</a></h2>
+<p>A comprehensive catalogue of techniques for transforming motivic material.</p>
+<h2 id="key-topics-60"><a class="header" href="#key-topics-60">Key Topics</a></h2>
+<ul>
+<li>Pitch transformations</li>
+<li>Rhythm transformations</li>
+<li>Contour transformations</li>
+<li>Timbral transformations</li>
+<li>Combined transformations</li>
+</ul>
+<h2 id="notes-60"><a class="header" href="#notes-60">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="recorder-extended-techniques"><a class="header" href="#recorder-extended-techniques">Recorder Extended Techniques</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-62"><a class="header" href="#overview-62">Overview</a></h2>
+<p>A catalogue of extended techniques for the recorder with notation examples.</p>
+<h2 id="key-topics-61"><a class="header" href="#key-topics-61">Key Topics</a></h2>
+<ul>
+<li>Multiphonics</li>
+<li>Microtones</li>
+<li>Breath sounds</li>
+<li>Key clicks</li>
+<li>Overblowing</li>
+<li>Notation standards</li>
+</ul>
+<h2 id="notes-61"><a class="header" href="#notes-61">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="c-berklee-syllabus-reference"><a class="header" href="#c-berklee-syllabus-reference">C: Berklee Syllabus Reference</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-63"><a class="header" href="#overview-63">Overview</a></h2>
+<p>Quick reference for Berklee Online course requirements across all nine semesters.</p>
+<h2 id="key-topics-62"><a class="header" href="#key-topics-62">Key Topics</a></h2>
+<ul>
+<li>Course summaries</li>
+<li>Learning outcomes by level</li>
+<li>Deliverable requirements</li>
+<li>Links to course pages</li>
+</ul>
+<h2 id="notes-62"><a class="header" href="#notes-62">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="d-glossary"><a class="header" href="#d-glossary">D: Glossary</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-64"><a class="header" href="#overview-64">Overview</a></h2>
+<p>Definitions of key terms used throughout the curriculum.</p>
+<h2 id="terms"><a class="header" href="#terms">Terms</a></h2>
+<p><em>(To be populated as curriculum develops)</em></p>
+<ul>
+<li><strong>Cell</strong>: The smallest unit of musical material with recognizable character</li>
+<li><strong>Gesture</strong>: A complete musical action with characteristic attack, sustain, and release</li>
+<li><strong>Developing variation</strong>: Schoenberg's technique of generating structures from minimal material</li>
+<li><strong>Stratification</strong>: The layering of distinct musical streams</li>
+</ul>
+<h2 id="notes-63"><a class="header" href="#notes-63">Notes</a></h2>
+<p>[Space for notes during development]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="e-bibliography"><a class="header" href="#e-bibliography">E: Bibliography</a></h1>
+<p><em>Content to be developed.</em></p>
+<h2 id="overview-65"><a class="header" href="#overview-65">Overview</a></h2>
+<p>Complete bibliography of sources referenced throughout the curriculum.</p>
+<h2 id="categories"><a class="header" href="#categories">Categories</a></h2>
+<ul>
+<li>Composition pedagogy</li>
+<li>Post-tonal theory</li>
+<li>Orchestration</li>
+<li>Recorder technique</li>
+<li>Contemporary music</li>
+</ul>
+<h2 id="primary-sources"><a class="header" href="#primary-sources">Primary Sources</a></h2>
+<p><em>(To be populated as curriculum develops)</em></p>
+<h2 id="secondary-sources"><a class="header" href="#secondary-sources">Secondary Sources</a></h2>
+<p><em>(To be populated as curriculum develops)</em></p>
+<h2 id="notes-64"><a class="header" href="#notes-64">Notes</a></h2>
+<p>[Space for notes during development]</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
