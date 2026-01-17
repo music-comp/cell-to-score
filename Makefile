@@ -57,6 +57,10 @@ help:
 	@echo "  $(YELLOW)make check$(RESET)            - Build + lint + test"
 	@echo "  $(YELLOW)make check-all$(RESET)        - Build + lint + coverage"
 	@echo ""
+	@echo "$(GREEN)Development:$(RESET)"
+	@echo "  $(YELLOW)make serve$(RESET)            - Serve mdbook at $(LOCALHOST):$(LOCALPORT)"
+	@echo "  $(YELLOW)make watch$(RESET)            - Watch for changes and rebuild"
+	@echo ""
 	@echo "$(GREEN)Cleaning:$(RESET)"
 	@echo "  $(YELLOW)make clean$(RESET)            - Clean bin directory"
 	@echo "  $(YELLOW)make clean-all$(RESET)        - Full clean (cargo clean)"
@@ -274,6 +278,19 @@ check-all: build lint coverage
 	@echo ""
 	@echo "$(GREEN)✓ Full validation complete (build + lint + coverage)$(RESET)"
 	@echo ""
+
+# Development targets
+.PHONY: serve
+serve:
+	@echo "$(BLUE)Starting mdbook server...$(RESET)"
+	@echo "$(CYAN)• Serving at http://$(LOCALHOST):$(LOCALPORT)$(RESET)"
+	@mdbook serve -n $(LOCALHOST) -p $(LOCALPORT)
+
+.PHONY: watch
+watch:
+	@echo "$(BLUE)Watching for changes...$(RESET)"
+	@echo "$(CYAN)• Will rebuild on file changes$(RESET)"
+	@mdbook watch
 
 # Utility targets
 .PHONY: tracked-files
