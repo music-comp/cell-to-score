@@ -329,7 +329,7 @@ deploy: build
 	@echo "$(CYAN)Updating git worktree $(DEST_DIR) dir for $(PUBLISH_BRANCH) branch ...$(RESET)"
 	@cd $(DEST_DIR) && \
 	git add -A && \
-	(git commit -m "Site rebuild - $(BUILD_TIME)" || echo "$(YELLOW)No changes to commit$(RESET)")
+	(git commit -m "Book rebuild - $(BUILD_TIME)" || echo "$(YELLOW)No changes to commit$(RESET)")
 	@git checkout _cobalt.yml
 	@echo "$(CYAN)• Codeberg:$(RESET)"
 	@git push codeberg $(PUBLISH_BRANCH)
