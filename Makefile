@@ -216,13 +216,15 @@ deploy: book
 	@cd $(DEST_DIR) && \
 	git add -A && \
 	(git commit -m "Book rebuild - $(BUILD_TIME)" || echo "$(YELLOW)No changes to commit$(RESET)")
-	@echo "$(CYAN)• Codeberg:$(RESET)"
-	@git push codeberg $(PUBLISH_BRANCH)
-	@echo "$(GREEN)✓ Published$(RESET)"
 	@echo "$(CYAN)• Github:$(RESET)"
 	@git push github $(PUBLISH_BRANCH)
+	@echo "$(GREEN)✓ Published$(RESET)"
+	@echo "$(CYAN)• Codeberg:$(RESET)"
+	@git push codeberg $(PUBLISH_BRANCH)
 	@echo "$(GREEN)✓ Published$(RESET)"
 	@echo "$(GREEN)✓ Deployment complete$(RESET)"
 	@echo "$(CYAN)→ Site should now be live at:"
 	@echo "$(CYAN)• Codeberg: $(RESET)$(BLUE)$(BACKUP_SITE_URL)$(RESET)"
 	@echo "$(CYAN)• Github: $(RESET)$(BLUE)$(SITE_URL)$(RESET)"
+
+publish: deploy
