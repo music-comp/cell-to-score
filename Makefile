@@ -18,8 +18,8 @@ GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unkno
 BUILD_TIME := $(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 RUST_VERSION := $(shell rustc --version 2>/dev/null || echo "unknown")
 
-SITE_URL := https://forgotten-tones.github.io/cell-to-score/
-BACKUP_SITE_URL := https://forgotten-tones.codeberg.page/cell-to-score/
+SITE_URL := https://music-comp.github.io/cell-to-score/
+BACKUP_SITE_URL := https://music-comp.codeberg.page/cell-to-score/
 PUBLISH_BRANCH := pages
 CODE_BRANCH := $(GIT_BRANCH)
 DEST_DIR := book

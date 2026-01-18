@@ -12,8 +12,8 @@ build-dir = "book"
 [output.html]
 default-theme = "rust"
 preferred-dark-theme = "coal"
-git-repository-url = "https://github.com/forgotten-tones/cell-to-score"
-edit-url-template = "https://github.com/forgotten-tones/cell-to-score/edit/main/{path}"
+git-repository-url = "https://github.com/music-comp/cell-to-score"
+edit-url-template = "https://github.com/music-comp/cell-to-score/edit/main/{path}"
 
 [output.html.fold]
 enable = true

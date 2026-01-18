@@ -15,8 +15,8 @@ The curriculum is designed to accompany nine semesters of private composition in
 
 **Read the book:** on ...
 
-* [GitHub](https://forgotten-tones.github.io/cell-to-score)
-* [Codeberg](https://forgotten-tones.codeberg.pages/cell-to-score)
+* [GitHub](https://music-comp.github.io/cell-to-score)
+* [Codeberg](https://music-comp.codeberg.pages/cell-to-score)
 
 ---
 
